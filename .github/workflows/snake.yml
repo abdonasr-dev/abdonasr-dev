@@ -1,23 +1,4 @@
-Skip to content
-Abdelrahman-Nasr-code
-Abdelrahman-Nasr-code
-Repository navigation
-Code
-Issues
-Pull requests
-Agents
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Generate Snake Contribution Graph
-Generate Snake Contribution Graph #12
-All jobs
-Run details
-Workflow file for this run
-.github/workflows/snake.yml at 155d53c
+
 name: Generate Snake Contribution Graph
 
 on:
