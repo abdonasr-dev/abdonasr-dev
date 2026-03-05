@@ -1,26 +1,58 @@
-name: Generate Snake
-
-permissions:
-  contents: write
+Skip to content
+Abdelrahman-Nasr-code
+Abdelrahman-Nasr-code
+Repository navigation
+Code
+Issues
+Pull requests
+Agents
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Generate Snake Contribution Graph
+Generate Snake Contribution Graph #12
+All jobs
+Run details
+Workflow file for this run
+.github/workflows/snake.yml at 155d53c
+name: Generate Snake Contribution Graph
 
 on:
   schedule:
     - cron: "0 */12 * * *"
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - uses: Platane/snk/svg-only@v3
-        with:
-          github_user_name: abdonasr-dev
-          outputs: dist/github-contribution-grid-snake.svg
+      - uses: actions/checkout@v4
 
-      - uses: crazy-max/ghaction-github-pages@v3
+      - name: Generate Snake Animation
+        uses: Platane/snk/svg-only@v3
         with:
-          target_branch: output
-          build_dir: dist
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/github-contribution-grid-snake.svg?color_snake=#38BDF8
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#38BDF8
+      - name: Push Snake to Output Branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd dist
+          git init
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git add .
+          git commit -m "chore: update snake animation [skip ci]"
+          git push --force origin HEAD:output
